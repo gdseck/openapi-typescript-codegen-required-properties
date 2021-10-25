@@ -1,0 +1,59 @@
+openapi: 3.0.3
+info:
+  title: Overriding optional properties test
+  version: 1.0.0
+
+paths:
+  /v1/users/me:
+    get:
+      summary: GET User
+      operationId: getUser
+      description: The currently logged in user
+      responses:
+        '200':
+          description: A user
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+    patch:
+      summary: PATCH User
+      operationId: updateUser
+      description: Partially update the current user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BaseUser'
+      responses:
+        '200':
+          description: The updated user
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+
+components:
+  schemas:
+    BaseUser:
+      type: object
+      properties:
+        firstName:
+          type: string
+        lastName:
+          type: string
+
+    User:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/BaseUser'
+      properties:
+        id:
+          type: string
+          format: uuid
+      required:
+        - id
+        - lastName
+        - firstName
+

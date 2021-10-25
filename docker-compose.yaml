@@ -1,0 +1,10 @@
+version: '3.9'
+services:
+  redoc:
+    image: redocly/redoc
+    ports:
+      - 5500:80
+    volumes:
+      - ./specification.yaml:/usr/share/nginx/html/specification.yaml
+    environment:
+      - SPEC_URL=specification.yaml
